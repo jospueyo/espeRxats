@@ -4,7 +4,7 @@ get_table("diades_castells") %>%
   filter(!str_detect(castell, "\\dd[45]")) %>% 
   filter(!str_detect(castell, "[pv]d")) %>%
   filter(!str_detect(castell, "aco")) %>% 
-  filter(resultat == "d") %>% 
+  filter(resultat %in% c("d", "c")) %>% 
   group_by(castell) %>% 
   mutate(n = n()) %>% 
   filter(n > 1) %>%
@@ -20,9 +20,9 @@ get_table("diades_castells") %>%
   
 # canvia castell i ronda per explorar casos que et generin interès
 
-explora_diada_on <- function(.castell, .ronda, .resultat){
+explora_diada_on <- function(.castell, .ronda = c(1,2,3,4,5,6,7), .resultat = c("d", "c")){
   doi <- get_table("diades_castells") %>% 
-    filter(castell == .castell & ronda == .ronda+1 & resultat == .resultat) %>% 
+    filter(castell == .castell & ronda %in% (.ronda+1) & resultat %in% .resultat) %>% 
     pull(id_diada)
   
   get_table("diades_castells") %>% 
@@ -30,5 +30,4 @@ explora_diada_on <- function(.castell, .ronda, .resultat){
     left_join(get_table("diades"), c("id_diada" = "id"))  
 }
 
-explora_diada_on("3d7", 3, "d")
-
+explora_diada_on("3d7", 3)

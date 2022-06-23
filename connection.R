@@ -15,10 +15,9 @@ db <- DBI::dbConnect(RMySQL::MySQL(),
 tables <- c("castells", "colles", "diades", "diades_castells", "diades_colles", "resultats")
 
 get_table <- function(.table, .db = db){
-  if (!DBI::dbIsValid(.db)) .db
+  .db
   
   tbl(.db, .table) %>% 
     as_tibble()
 }
 
-DBI::dbIsValid(db)
