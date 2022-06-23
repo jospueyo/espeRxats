@@ -22,7 +22,7 @@ get_table("diades_castells") %>%
 
 explora_diada_on <- function(.castell, .ronda, .resultat){
   doi <- get_table("diades_castells") %>% 
-    filter(castell == .castell & ronda == .ronda & resultat == .resultat) %>% 
+    filter(castell == .castell & ronda == .ronda+1 & resultat == .resultat) %>% 
     pull(id_diada)
   
   get_table("diades_castells") %>% 
@@ -30,5 +30,5 @@ explora_diada_on <- function(.castell, .ronda, .resultat){
     left_join(get_table("diades"), c("id_diada" = "id"))  
 }
 
-explora_diada_on("4d7", 4, "d")
+explora_diada_on("3d7", 3, "d")
 
